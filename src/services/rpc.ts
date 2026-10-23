@@ -220,34 +220,59 @@ export async function scanRealBlocks(
 }
 
 /**
- * Dispatch real Telegram message via Telegram Bot API with accurate labels
+ * Dispatch real Telegram message via secure serverless endpoint (/api/alert)
+ * Token is maintained server-side and never exposed to the client bundle.
  */
 export async function sendRealTelegramAlert({
   botToken,
   chatId,
   message,
 }: {
-  botToken: string;
+  botToken?: string;
   chatId: string;
   message: string;
 }): Promise<{ ok: boolean; description?: string }> {
-  if (!botToken || !chatId) {
-    return { ok: false, description: 'Missing Bot Token or Chat ID' };
+  if (!chatId) {
+    return { ok: false, description: 'Missing Chat ID' };
   }
 
+  // 1. Dispatch through secure serverless backend relay
   try {
-    const res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    const res = await fetch('/api/alert', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-        parse_mode: 'HTML',
-        disable_web_page_preview: false,
+        chatId: chatId.trim(),
+        message,
+        botToken: botToken?.trim() || undefined,
       }),
     });
-    return await res.json();
+    const data = await res.json();
+    if (data.ok) {
+      return { ok: true };
+    }
+    return { ok: false, description: data.error || data.description || 'Failed to dispatch alert' };
   } catch (err: any) {
-    return { ok: false, description: err.message };
+    // 2. Fallback to direct call only if user explicitly typed a custom token in their browser
+    if (botToken) {
+      try {
+        const directRes = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId.trim(),
+            text: message,
+            parse_mode: 'HTML',
+            disable_web_page_preview: false,
+          }),
+        });
+        const directData = await directRes.json();
+        return { ok: directData.ok, description: directData.description };
+      } catch (fallbackErr: any) {
+        return { ok: false, description: fallbackErr.message };
+      }
+    }
+    return { ok: false, description: err.message || 'Alert relay unreachable.' };
   }
 }
+

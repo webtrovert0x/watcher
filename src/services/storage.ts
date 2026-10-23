@@ -1,22 +1,20 @@
 import type { WatchedWallet, DetectedTransaction } from '../types';
 
-const STORAGE_KEY_WALLETS = 'bot_wallet_watcher_list_v2';
-const STORAGE_KEY_TXS = 'bot_wallet_watcher_txs_v2';
-const STORAGE_KEY_TELEGRAM = 'bot_wallet_watcher_telegram_v2';
-
-export const INITIAL_WALLETS: WatchedWallet[] = [];
-export const INITIAL_TRANSACTIONS: DetectedTransaction[] = [];
+const STORAGE_KEY_WALLETS = 'bot_watcher_wallets_v2';
+const STORAGE_KEY_TXS = 'bot_watcher_txs_v2';
+const STORAGE_KEY_TELEGRAM = 'bot_watcher_tg_settings';
 
 export function getStoredWallets(): WatchedWallet[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY_WALLETS);
-    return raw ? JSON.parse(raw) : INITIAL_WALLETS;
+    if (!raw) return [];
+    return JSON.parse(raw);
   } catch {
-    return INITIAL_WALLETS;
+    return [];
   }
 }
 
-export function saveStoredWallets(wallets: WatchedWallet[]): void {
+export function saveStoredWallets(wallets: WatchedWallet[]) {
   try {
     localStorage.setItem(STORAGE_KEY_WALLETS, JSON.stringify(wallets));
   } catch (err) {
@@ -27,13 +25,14 @@ export function saveStoredWallets(wallets: WatchedWallet[]): void {
 export function getStoredTransactions(): DetectedTransaction[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY_TXS);
-    return raw ? JSON.parse(raw) : INITIAL_TRANSACTIONS;
+    if (!raw) return [];
+    return JSON.parse(raw);
   } catch {
-    return INITIAL_TRANSACTIONS;
+    return [];
   }
 }
 
-export function saveStoredTransactions(txs: DetectedTransaction[]): void {
+export function saveStoredTransactions(txs: DetectedTransaction[]) {
   try {
     localStorage.setItem(STORAGE_KEY_TXS, JSON.stringify(txs));
   } catch (err) {
@@ -47,21 +46,20 @@ export interface TelegramSettingsState {
   linked: boolean;
 }
 
-const DEFAULT_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN || '';
-
 export function getTelegramSettings(): TelegramSettingsState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY_TELEGRAM);
     if (raw) {
       const parsed = JSON.parse(raw);
       return {
-        ...parsed,
-        botToken: parsed.botToken || DEFAULT_BOT_TOKEN,
+        botToken: parsed.botToken || '',
+        chatId: parsed.chatId || '',
+        linked: Boolean(parsed.linked),
       };
     }
-    return { botToken: DEFAULT_BOT_TOKEN, chatId: '', linked: false };
+    return { botToken: '', chatId: '', linked: false };
   } catch {
-    return { botToken: DEFAULT_BOT_TOKEN, chatId: '', linked: false };
+    return { botToken: '', chatId: '', linked: false };
   }
 }
 
@@ -70,5 +68,13 @@ export function saveTelegramSettings(settings: TelegramSettingsState) {
     localStorage.setItem(STORAGE_KEY_TELEGRAM, JSON.stringify(settings));
   } catch (err) {
     console.error('Failed to save telegram settings:', err);
+  }
+}
+
+export function clearTelegramSettings() {
+  try {
+    localStorage.removeItem(STORAGE_KEY_TELEGRAM);
+  } catch (err) {
+    console.error('Failed to clear telegram settings:', err);
   }
 }

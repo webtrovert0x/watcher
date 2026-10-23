@@ -369,12 +369,12 @@ export const App: React.FC = () => {
             RPC Endpoint ↗
           </a>
           <a
-            href="https://t.me/wallet_watcher_on_bot"
+            href={`https://t.me/${import.meta.env.VITE_TELEGRAM_BOT_USERNAME || 'bot'}`}
             target="_blank"
             rel="noopener noreferrer"
             style={{ color: '#38bdf8', textDecoration: 'none' }}
           >
-            @wallet_watcher_on_bot ↗
+            @{import.meta.env.VITE_TELEGRAM_BOT_USERNAME || 'Telegram Bot'} ↗
           </a>
         </div>
       </footer>

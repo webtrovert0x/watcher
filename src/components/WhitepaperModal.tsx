@@ -62,7 +62,7 @@ export const WhitepaperModal: React.FC<WhitepaperModalProps> = ({ isOpen, onClos
             <span>Mainnet Contract: 0x78d6...429f ↗</span>
           </a>
           <a
-            href="https://t.me/wallet_watcher_on_bot"
+            href={`https://t.me/${import.meta.env.VITE_TELEGRAM_BOT_USERNAME || 'bot'}`}
             target="_blank"
             rel="noopener noreferrer"
             className="tag-badge"
@@ -74,7 +74,7 @@ export const WhitepaperModal: React.FC<WhitepaperModalProps> = ({ isOpen, onClos
             }}
           >
             <Send size={13} />
-            <span>Telegram Bot: @wallet_watcher_on_bot ↗</span>
+            <span>Telegram Bot: @{import.meta.env.VITE_TELEGRAM_BOT_USERNAME || 'bot'} ↗</span>
           </a>
         </div>
 

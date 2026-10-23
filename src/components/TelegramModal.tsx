@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Send, CheckCircle2, Bell, AlertCircle } from 'lucide-react';
 import { sendRealTelegramAlert } from '../services/rpc';
 
@@ -22,21 +22,26 @@ export const TelegramModal: React.FC<TelegramModalProps> = ({
   onAlertSent,
 }) => {
   const [chatId, setChatId] = useState(initialChatId || '');
-  const [botToken, setBotToken] = useState(
-    initialBotToken || import.meta.env.VITE_TELEGRAM_BOT_TOKEN || ''
-  );
+  const [botToken, setBotToken] = useState(initialBotToken || '');
   const [linked, setLinked] = useState(telegramLinked);
   const [isSending, setIsSending] = useState(false);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; msg: string } | null>(null);
+  const botUsername = import.meta.env.VITE_TELEGRAM_BOT_USERNAME || 'bot';
+
+  useEffect(() => {
+    if (initialBotToken) {
+      setBotToken(initialBotToken);
+    }
+  }, [initialBotToken]);
 
   if (!isOpen) return null;
 
   const handleTest = async () => {
     setFeedback(null);
-    if (!botToken.trim() || !chatId.trim()) {
+    if (!chatId.trim()) {
       setFeedback({
         type: 'error',
-        msg: 'Please provide both your Telegram Bot Token and Chat ID to send a live test message.',
+        msg: 'Please enter your Telegram Chat ID (e.g. 123456789 or @my_channel) to send a test message.',
       });
       return;
     }
@@ -45,15 +50,15 @@ export const TelegramModal: React.FC<TelegramModalProps> = ({
     const testMessage = `
 🚨 <b>BOT Wallet Watcher Test Alert</b>
 
-✅ Your Telegram bot is operational!
-🤖 <b>Bot:</b> @wallet_watcher_on_bot
+✅ Your Telegram alerts are working!
+🤖 <b>Bot:</b> @${botUsername}
 🌐 <b>Network:</b> BOT Chain Mainnet (ID: 677)
 🔗 <b>Explorer:</b> <a href="https://scan.botchain.ai">https://scan.botchain.ai</a>
 ⏱️ <i>${new Date().toUTCString()}</i>
     `.trim();
 
     const res = await sendRealTelegramAlert({
-      botToken: botToken.trim(),
+      botToken: botToken.trim() || undefined,
       chatId: chatId.trim(),
       message: testMessage,
     });
@@ -66,12 +71,19 @@ export const TelegramModal: React.FC<TelegramModalProps> = ({
     } else {
       setFeedback({
         type: 'error',
-        msg: `Telegram API error: ${res.description || 'Failed to send message.'}`,
+        msg: `Telegram dispatch error: ${res.description || 'Failed to send message.'}`,
       });
     }
   };
 
   const handleSave = () => {
+    if (!chatId.trim()) {
+      setFeedback({
+        type: 'error',
+        msg: 'Please provide your Telegram Chat ID or channel username.',
+      });
+      return;
+    }
     onSave(chatId.trim(), botToken.trim(), linked);
     onClose();
   };
@@ -98,7 +110,7 @@ export const TelegramModal: React.FC<TelegramModalProps> = ({
             <div>
               <h3>Telegram Notification Center</h3>
               <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                Real-time alerts via @wallet_watcher_on_bot
+                Real-time alerts via @{botUsername}
               </p>
             </div>
           </div>
@@ -144,12 +156,12 @@ export const TelegramModal: React.FC<TelegramModalProps> = ({
             <li>
               Open your bot in Telegram:{' '}
               <a
-                href="https://t.me/wallet_watcher_on_bot"
+                href={`https://t.me/${botUsername}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ color: '#38bdf8', fontWeight: 600, textDecoration: 'none' }}
               >
-                @wallet_watcher_on_bot ↗
+                @{botUsername} ↗
               </a>
             </li>
             <li>Press <strong>Start</strong> or send <code>/start</code>.</li>
@@ -159,24 +171,56 @@ export const TelegramModal: React.FC<TelegramModalProps> = ({
 
         {/* Settings form */}
         <div className="form-group">
-          <label className="form-label">Telegram Bot Token (HTTP API)</label>
-          <input
-            type="password"
-            className="form-input"
-            value={botToken}
-            onChange={(e) => setBotToken(e.target.value)}
-            placeholder="123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ..."
-          />
-        </div>
-
-        <div className="form-group">
-          <label className="form-label">Your Telegram Chat ID / Channel Username</label>
+          <label className="form-label">Your Telegram Chat ID / Channel Username *</label>
           <input
             type="text"
             className="form-input"
             value={chatId}
             onChange={(e) => setChatId(e.target.value)}
             placeholder="e.g. 123456789 or @my_channel"
+          />
+        </div>
+
+        <div className="form-group" style={{ background: 'rgba(255, 255, 255, 0.02)', padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+            <label className="form-label" style={{ margin: 0 }}>
+              Custom Bot Token <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(Optional)</span>
+            </label>
+            {botToken && (
+              <button
+                type="button"
+                onClick={() => {
+                  setBotToken('');
+                  setLinked(false);
+                  try {
+                    localStorage.removeItem('bot_watcher_tg_settings');
+                  } catch {}
+                  onSave(chatId, '', false);
+                }}
+                style={{
+                  background: 'rgba(239, 68, 68, 0.15)',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  color: '#f87171',
+                  borderRadius: '6px',
+                  padding: '2px 8px',
+                  fontSize: '0.74rem',
+                  cursor: 'pointer',
+                }}
+                title="Wipe saved bot token"
+              >
+                Clear Token
+              </button>
+            )}
+          </div>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-dim)', marginBottom: '8px' }}>
+            🔒 <strong>Serverless Relay:</strong> The official bot token is managed securely server-side in Vercel. Leave this blank to use the server bot.
+          </p>
+          <input
+            type="password"
+            className="form-input"
+            value={botToken}
+            onChange={(e) => setBotToken(e.target.value)}
+            placeholder="Leave blank to use server bot, or paste custom token"
           />
         </div>
 
