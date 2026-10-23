@@ -43,15 +43,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTelegram, onOpenWhitepaper
 
         {/* Network indicator */}
         <a
-          href="https://scan.bohr.life"
+          href="https://scan.botchain.ai"
           target="_blank"
           rel="noopener noreferrer"
           className="network-badge"
-          title="Chain ID: 968 (https://rpc.bohr.life)"
+          title="Chain ID: 677 (https://rpc.botchain.ai)"
           style={{ textDecoration: 'none' }}
         >
           <span className="pulse-dot" />
-          <span>BOT Testnet (968)</span>
+          <span>BOT Mainnet (677)</span>
           <ExternalLink size={12} style={{ opacity: 0.7 }} />
         </a>
 

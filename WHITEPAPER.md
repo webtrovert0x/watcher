@@ -1,8 +1,8 @@
 # BOT Wallet Watcher Whitepaper
 ### Decentralized On-Chain Activity Monitoring & Real-Time Alert Infrastructure on BOT Chain
 **Version 1.0 • October 2026**  
-**Network:** BOT Chain Testnet (Chain ID: `968`)  
-**Verified Smart Contract:** [`0x219b8f57f3134cd76df54ee1544efb9871633057`](https://scan.bohr.life/address/0x219b8f57f3134cd76df54ee1544efb9871633057#code)  
+**Network:** BOT Chain Mainnet (Chain ID: `677`)  
+**Mainnet Smart Contract:** [`0x78d6f5a35149798c7985090ebc01c58cae01429f`](https://scan.botchain.ai/address/0x78d6f5a35149798c7985090ebc01c58cae01429f)  
 **Telegram Alert Bot:** [`@wallet_watcher_on_bot`](https://t.me/wallet_watcher_on_bot)
 
 ---
@@ -18,7 +18,7 @@ As decentralized applications, treasuries, and freelance economies expand on **B
 ## 2. The Problem Statement
 
 ### 2.1 The Latency & Exploratory Burden
-Block explorers such as BohrScan (`scan.bohr.life`) provide robust diagnostic interfaces, but they require active human polling. Users must remember to visit the website, paste an address, and review the recent block history.
+Block explorers such as BotScan (`scan.botchain.ai`) provide robust diagnostic interfaces, but they require active human polling. Users must remember to visit the website, paste an address, and review the recent block history.
 
 ### 2.2 Critical Risks for Web3 Stakeholders
 1. **Freelancers & Service Providers**: Inability to immediately know when a client has fulfilled an on-chain milestone or escrow deposit.
@@ -34,15 +34,15 @@ BOT Wallet Watcher is designed as a hybrid on-chain / off-chain reactive pipelin
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                            BOT Chain (Chain ID: 968)                        │
+│                            BOT Chain Mainnet (Chain ID: 677)                │
 │                                                                             │
 │   ┌────────────────────────┐                   ┌────────────────────────┐   │
 │   │   Incoming / Outgoing  │                   │  BOTWalletWatcher.sol  │   │
-│   │   Transactions & Logs  │                   │  (Verified Registry)   │   │
+│   │   Transactions & Logs  │                   │  (On-Chain Registry)   │   │
 │   └───────────┬────────────┘                   └───────────┬────────────┘   │
 └───────────────┼────────────────────────────────────────────┼────────────────┘
                 │ Raw Blocks & Event Logs                    │ Emits: WalletWatched()
-                │ (JSON-RPC https://rpc.bohr.life)           │ Emits: PreferencesUpdated()
+                │ (JSON-RPC https://rpc.botchain.ai)         │ Emits: PreferencesUpdated()
                 ▼                                            ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                          Off-Chain Indexing Worker                          │
@@ -93,12 +93,12 @@ struct WatchConfig {
 * `getMyWatchlist(address subscriber)`: **Zero-gas view function** enabling frontends and external nodes to read the full portfolio state in milliseconds.
 * `getAllMonitoredTargets()`: Master query function for indexer workers to ingest the complete set of network-monitored addresses.
 
-### 4.3 Contract Verification Details
-* **Contract Address:** [`0x219b8f57f3134cd76df54ee1544efb9871633057`](https://scan.bohr.life/address/0x219b8f57f3134cd76df54ee1544efb9871633057#code)
+### 4.3 Contract Details
+* **Contract Address:** [`0x78d6f5a35149798c7985090ebc01c58cae01429f`](https://scan.botchain.ai/address/0x78d6f5a35149798c7985090ebc01c58cae01429f)
 * **Compiler:** Solidity `v0.8.20+commit.a1b79de6`
-* **Optimization:** Enabled (`200` runs)
+* **Optimization:** Enabled (`1` run for minimal deployment gas fee)
 * **EVM Target:** `paris`
-* **Verification Status:** Verified with public source and ABI on BohrScan.
+* **Network:** BOT Chain Mainnet (Chain ID: 677)
 
 ---
 
@@ -148,7 +148,7 @@ When activity is detected, the engine formats an HTML message with contextual ba
 ### 6.2 Key Alert Guarantees
 * **Clear Directional Clarity**: Explicitly distinguishes between sender (`From`) and recipient (`To`).
 * **Sub-BOT Precision**: Captures small micro-transactions and token payouts without arbitrary minimum thresholds.
-* **Explorer Integrity**: Generates direct, verifiable links to BohrScan for immediate validation.
+* **Explorer Integrity**: Generates direct, verifiable links to BotScan for immediate validation.
 
 ---
 
@@ -156,12 +156,12 @@ When activity is detected, the engine formats an HTML message with contextual ba
 
 | Parameter | Specification |
 | :--- | :--- |
-| **Network** | BOT Chain Testnet |
-| **Chain ID** | `968` |
+| **Network** | BOT Chain Mainnet |
+| **Chain ID** | `677` |
 | **Native Currency** | `BOT` (18 Decimals) |
 | **Total Supply** | 150 Million BOT |
-| **RPC Endpoint** | `https://rpc.bohr.life` |
-| **Explorer** | `https://scan.bohr.life` |
+| **RPC Endpoint** | `https://rpc.botchain.ai` |
+| **Explorer** | `https://scan.botchain.ai` |
 
 * **Zero-Cost Consumption**: Reading watchlists, querying balances, and evaluating logs costs zero gas.
 * **Micro-Gas Registry**: Adding, updating, or removing watchlists costs fractions of a cent on BOT Chain (~0.0001 BOT).
@@ -204,5 +204,5 @@ When activity is detected, the engine formats an HTML message with contextual ba
 BOT Wallet Watcher transforms BOT Chain from a passive ledger into a proactive, event-driven ecosystem. By providing real-time visibility into incoming payments, treasury flows, and token transfers, the protocol empowers freelancers, DAO operators, and Web3 developers with the intelligence and speed needed to protect and manage on-chain assets.
 
 * **Explore the Code**: [`contracts/BOTWalletWatcher.sol`](file:///Users/mac/Desktop/wallet%20watcher%20/contracts/BOTWalletWatcher.sol)  
-* **Explorer Verification**: [BohrScan Verified Contract](https://scan.bohr.life/address/0x219b8f57f3134cd76df54ee1544efb9871633057#code)  
+* **Explorer Contract Link**: [BotScan Contract](https://scan.botchain.ai/address/0x78d6f5a35149798c7985090ebc01c58cae01429f)  
 * **Telegram Bot**: [t.me/wallet_watcher_on_bot](https://t.me/wallet_watcher_on_bot)

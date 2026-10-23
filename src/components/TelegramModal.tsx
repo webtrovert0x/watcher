@@ -47,8 +47,8 @@ export const TelegramModal: React.FC<TelegramModalProps> = ({
 
 ✅ Your Telegram bot is operational!
 🤖 <b>Bot:</b> @wallet_watcher_on_bot
-🌐 <b>Network:</b> BOT Chain Testnet (ID: 968)
-🔗 <b>Explorer:</b> <a href="https://scan.bohr.life">https://scan.bohr.life</a>
+🌐 <b>Network:</b> BOT Chain Mainnet (ID: 677)
+🔗 <b>Explorer:</b> <a href="https://scan.botchain.ai">https://scan.botchain.ai</a>
 ⏱️ <i>${new Date().toUTCString()}</i>
     `.trim();
 

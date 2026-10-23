@@ -57,7 +57,7 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({ wallets, transacti
         <div className="stat-value">{transactions.length}</div>
         <div className="stat-subtext">
           <span>●</span>
-          <span>Last 24 hours on Chain 968</span>
+          <span>Last 24 hours on Chain 677</span>
         </div>
       </div>
 

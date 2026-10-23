@@ -102,7 +102,7 @@ export const App: React.FC = () => {
 👤 <b>${isInc ? 'Sender (From)' : 'Recipient (To)'}:</b> <code>${shortCounter}</code>
 📦 <b>Block:</b> #${tx.blockNumber}
 
-🔗 <a href="https://scan.bohr.life/tx/${tx.hash}">View on BohrScan Explorer</a>
+🔗 <a href="https://scan.botchain.ai/tx/${tx.hash}">View on BotScan Explorer</a>
 ⏱️ <i>${new Date().toLocaleTimeString()}</i>
             `.trim();
 
@@ -174,7 +174,7 @@ export const App: React.FC = () => {
         <div className="telegram-banner-info">
           <h3>⚡ Real-Time On-Chain Monitor Active</h3>
           <p>
-            Connected directly to BOT Chain Testnet RPC (<code>https://rpc.bohr.life</code>, Chain ID: 968).
+            Connected directly to BOT Chain Mainnet RPC (<code>https://rpc.botchain.ai</code>, Chain ID: 677).
             Current Block: <strong>#{currentBlock > 0 ? currentBlock : 'Syncing...'}</strong>.
           </p>
         </div>
@@ -237,7 +237,7 @@ export const App: React.FC = () => {
 
         <div>
           <span style={{ fontSize: '0.82rem', color: 'var(--text-dim)' }}>
-            RPC: <code>https://rpc.bohr.life</code>
+            RPC: <code>https://rpc.botchain.ai</code>
           </span>
         </div>
       </div>
@@ -336,7 +336,7 @@ export const App: React.FC = () => {
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Shield size={16} color="var(--cyan-primary)" />
-          <span>BOT Wallet Watcher • Connected to BOT Chain Testnet (Chain ID: 968)</span>
+          <span>BOT Wallet Watcher • Connected to BOT Chain Mainnet (Chain ID: 677)</span>
         </div>
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
           <button
@@ -353,15 +353,15 @@ export const App: React.FC = () => {
             Whitepaper ↗
           </button>
           <a
-            href="https://scan.bohr.life"
+            href="https://scan.botchain.ai"
             target="_blank"
             rel="noopener noreferrer"
             style={{ color: 'var(--text-muted)', textDecoration: 'none' }}
           >
-            BohrScan Explorer ↗
+            BotScan Explorer ↗
           </a>
           <a
-            href="https://rpc.bohr.life"
+            href="https://rpc.botchain.ai"
             target="_blank"
             rel="noopener noreferrer"
             style={{ color: 'var(--text-muted)', textDecoration: 'none' }}

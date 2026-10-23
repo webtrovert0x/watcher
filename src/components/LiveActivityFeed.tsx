@@ -46,7 +46,7 @@ export const LiveActivityFeed: React.FC<LiveActivityFeedProps> = ({
             </span>
           </div>
           <p className="section-subtitle">
-            Transfers verified on BOT Chain Testnet (Chain ID: 968, https://rpc.bohr.life).
+            Transfers verified on BOT Chain Mainnet (Chain ID: 677, https://rpc.botchain.ai).
           </p>
         </div>
 
@@ -55,7 +55,7 @@ export const LiveActivityFeed: React.FC<LiveActivityFeedProps> = ({
             className="btn btn-secondary"
             onClick={onRefreshScan}
             disabled={isScanning}
-            title="Scan latest blocks from Bohr RPC"
+            title="Scan latest blocks from BOT Chain Mainnet RPC"
             id="btn-scan-blocks"
           >
             <RefreshCw size={15} className={isScanning ? 'pulse-dot' : ''} />
@@ -97,7 +97,7 @@ export const LiveActivityFeed: React.FC<LiveActivityFeedProps> = ({
               No transactions detected for your active watchlist yet
             </p>
             <p style={{ fontSize: '0.84rem' }}>
-              The indexer is actively polling blocks from <code>https://rpc.bohr.life</code>.
+              The indexer is actively polling blocks from <code>https://rpc.botchain.ai</code>.
               When transactions touch any of your watched addresses, they will appear here in real time.
             </p>
           </div>
@@ -139,11 +139,11 @@ export const LiveActivityFeed: React.FC<LiveActivityFeedProps> = ({
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '8px', marginTop: '4px' }}>
                     <span className="feed-time">{tx.timestamp}</span>
                     <a
-                      href={`https://scan.bohr.life/tx/${tx.hash}`}
+                      href={`https://scan.botchain.ai/tx/${tx.hash}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="copy-btn"
-                      title="View on BohrScan Explorer"
+                      title="View on BotScan Explorer"
                     >
                       <ExternalLink size={13} />
                     </a>

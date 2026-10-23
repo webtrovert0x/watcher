@@ -151,10 +151,10 @@ export const WatchlistTable: React.FC<WatchlistTableProps> = ({
                         {copiedId === item.id ? <Check size={14} color="#10b981" /> : <Copy size={14} />}
                       </button>
                       <a
-                        href={`https://scan.bohr.life/address/${item.target}`}
+                        href={`https://scan.botchain.ai/address/${item.target}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        title="View on BohrScan Explorer"
+                        title="View on BotScan Explorer"
                       >
                         <ExternalLink size={13} />
                       </a>

@@ -1,14 +1,14 @@
 /**
  * BOT Wallet Watcher - Off-Chain Indexer & Block Worker
- * Monitors BOT Chain Testnet (Chain ID: 968, RPC: https://rpc.bohr.life)
+ * Monitors BOT Chain Mainnet (Chain ID: 677, RPC: https://rpc.botchain.ai)
  * Detects native BOT transfers, ERC-20 transfers (any amount), and sends real-time Telegram alerts.
  */
 
 import { createPublicClient, http, formatEther, formatUnits } from 'viem';
 import { TelegramNotifier } from './telegramBot.js';
 
-const RPC_URL = process.env.BOT_RPC_URL || 'https://rpc.bohr.life';
-const CHAIN_ID = 968;
+const RPC_URL = process.env.BOT_RPC_URL || 'https://rpc.botchain.ai';
+const CHAIN_ID = parseInt(process.env.BOT_CHAIN_ID || '677', 10);
 
 const client = createPublicClient({
   transport: http(RPC_URL),

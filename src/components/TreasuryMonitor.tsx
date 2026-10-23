@@ -119,10 +119,10 @@ export const TreasuryMonitor: React.FC<TreasuryMonitorProps> = ({
                 <div className="wallet-address-cell">
                   <span>{`${t.target.slice(0, 8)}...${t.target.slice(-6)}`}</span>
                   <a
-                    href={`https://scan.bohr.life/address/${t.target}`}
+                    href={`https://scan.botchain.ai/address/${t.target}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    title="View on BohrScan Explorer"
+                    title="View on BotScan Explorer"
                   >
                     <ExternalLink size={13} />
                   </a>

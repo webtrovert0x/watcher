@@ -178,4 +178,4 @@ export const BOT_WALLET_WATCHER_ABI = [
 ] as const;
 
 // Default deployed address on BOT Chain Testnet (configurable via env / settings)
-export const BOT_WALLET_WATCHER_ADDRESS = "0x219b8f57f3134cd76df54ee1544efb9871633057" as `0x${string}`;
+export const BOT_WALLET_WATCHER_ADDRESS = "0x78d6f5a35149798c7985090ebc01c58cae01429f" as `0x${string}`;

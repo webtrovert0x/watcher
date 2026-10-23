@@ -1,10 +1,10 @@
 import { createPublicClient, http, formatEther, formatUnits } from 'viem';
-import { botTestnet } from '../config/chains';
+import { botMainnet } from '../config/chains';
 import type { DetectedTransaction, WatchedWallet } from '../types';
 
 export const botPublicClient = createPublicClient({
-  chain: botTestnet,
-  transport: http('https://rpc.bohr.life'),
+  chain: botMainnet,
+  transport: http(import.meta.env.VITE_BOT_RPC_URL || 'https://rpc.botchain.ai'),
 });
 
 // ERC-20 Transfer Event topic: Transfer(address indexed from, address indexed to, uint256 value)

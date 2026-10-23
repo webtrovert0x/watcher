@@ -47,7 +47,7 @@ export const WhitepaperModal: React.FC<WhitepaperModalProps> = ({ isOpen, onClos
         {/* Contract & Bot Badges */}
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '24px' }}>
           <a
-            href="https://scan.bohr.life/address/0x219b8f57f3134cd76df54ee1544efb9871633057#code"
+            href="https://scan.botchain.ai/address/0x78d6f5a35149798c7985090ebc01c58cae01429f"
             target="_blank"
             rel="noopener noreferrer"
             className="tag-badge"
@@ -59,7 +59,7 @@ export const WhitepaperModal: React.FC<WhitepaperModalProps> = ({ isOpen, onClos
             }}
           >
             <CheckCircle2 size={13} />
-            <span>Verified Contract: 0x219b...3057 ↗</span>
+            <span>Mainnet Contract: 0x78d6...429f ↗</span>
           </a>
           <a
             href="https://t.me/wallet_watcher_on_bot"
@@ -126,10 +126,10 @@ export const WhitepaperModal: React.FC<WhitepaperModalProps> = ({ isOpen, onClos
               fontSize: '0.84rem',
             }}
           >
-            <div>• Network: BOT Chain Testnet (ID: 968)</div>
+            <div>• Network: BOT Chain Mainnet (ID: 677)</div>
             <div>• Native Currency: BOT (150 Million Total Supply)</div>
-            <div>• RPC URL: https://rpc.bohr.life</div>
-            <div>• Explorer: https://scan.bohr.life</div>
+            <div>• RPC URL: https://rpc.botchain.ai</div>
+            <div>• Explorer: https://scan.botchain.ai</div>
           </div>
 
           <h4 style={{ fontSize: '1.1rem', marginBottom: '8px', color: 'var(--cyan-primary)' }}>
@@ -147,13 +147,13 @@ export const WhitepaperModal: React.FC<WhitepaperModalProps> = ({ isOpen, onClos
             Close
           </button>
           <a
-            href="https://scan.bohr.life/address/0x219b8f57f3134cd76df54ee1544efb9871633057#code"
+            href="https://scan.botchain.ai/address/0x78d6f5a35149798c7985090ebc01c58cae01429f"
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary"
           >
             <Shield size={16} />
-            <span>Verify Contract on BohrScan ↗</span>
+            <span>View Contract on BotScan ↗</span>
           </a>
         </div>
       </div>
