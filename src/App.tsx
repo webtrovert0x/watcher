@@ -22,7 +22,7 @@ import {
   getRealBotBalance,
   sendRealTelegramAlert,
 } from './services/rpc';
-import { ListFilter, Radio, Landmark, Send, Bell, Shield, RefreshCw } from 'lucide-react';
+import { ListFilter, Radio, Landmark, Send, Bell, RefreshCw, ExternalLink } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [wallets, setWallets] = useState<WatchedWallet[]>([]);
@@ -319,63 +319,148 @@ export const App: React.FC = () => {
         </div>
       )}
 
-      {/* Footer Info */}
+      {/* Footer & Ecosystem Showcase */}
       <footer
         style={{
           marginTop: '60px',
-          paddingTop: '28px',
+          padding: '28px 0 36px',
           borderTop: '1px solid var(--border-subtle)',
           display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '16px',
-          fontSize: '0.84rem',
-          color: 'var(--text-dim)',
+          flexDirection: 'column',
+          gap: '20px',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Shield size={16} color="var(--cyan-primary)" />
-          <span>BOT Wallet Watcher • Connected to BOT Chain Mainnet (Chain ID: 677)</span>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '20px',
+          }}
+        >
+          {/* Brand & Network */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <img
+              src="/botchain-logo.png"
+              alt="BOT Chain"
+              style={{ width: '28px', height: '28px', borderRadius: '6px' }}
+            />
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span>BOT Chain Ecosystem</span>
+                <span className="tag-badge" style={{ background: 'rgba(56, 189, 248, 0.12)', color: '#38bdf8', padding: '2px 8px', fontSize: '0.72rem' }}>Mainnet (ID: 677)</span>
+              </div>
+              <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-dim)' }}>
+                Decentralized on-chain watchlist & real-time alert protocol
+              </p>
+            </div>
+          </div>
+
+          {/* BOT Chain Showcase Links with logo in front */}
+          <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '14px' }}>
+            <a
+              href="https://botchain.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '8px 14px',
+                borderRadius: '8px',
+                background: 'rgba(255, 255, 255, 0.04)',
+                border: '1px solid var(--border-subtle)',
+                color: 'var(--text-main)',
+                fontSize: '0.85rem',
+                fontWeight: 600,
+                textDecoration: 'none',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--cyan-primary)')}
+              onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border-subtle)')}
+            >
+              <img src="/botchain-logo.png" alt="BOT Chain" style={{ width: '18px', height: '18px', borderRadius: '4px' }} />
+              <span>BOT Chain website</span>
+              <ExternalLink size={13} style={{ opacity: 0.6 }} />
+            </a>
+
+            <a
+              href="https://scan.botchain.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '8px 14px',
+                borderRadius: '8px',
+                background: 'rgba(255, 255, 255, 0.04)',
+                border: '1px solid var(--border-subtle)',
+                color: 'var(--text-main)',
+                fontSize: '0.85rem',
+                fontWeight: 600,
+                textDecoration: 'none',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--cyan-primary)')}
+              onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border-subtle)')}
+            >
+              <img src="/botchain-logo.png" alt="BOT Chain" style={{ width: '18px', height: '18px', borderRadius: '4px' }} />
+              <span>BOT Chain explorer</span>
+              <ExternalLink size={13} style={{ opacity: 0.6 }} />
+            </a>
+          </div>
         </div>
-        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-          <button
-            onClick={() => setIsWhitepaperOpen(true)}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: 'var(--cyan-primary)',
-              cursor: 'pointer',
-              fontSize: 'inherit',
-              padding: 0,
-            }}
-          >
-            Whitepaper ↗
-          </button>
-          <a
-            href="https://scan.botchain.ai"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: 'var(--text-muted)', textDecoration: 'none' }}
-          >
-            BotScan Explorer ↗
-          </a>
-          <a
-            href="https://rpc.botchain.ai"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: 'var(--text-muted)', textDecoration: 'none' }}
-          >
-            RPC Endpoint ↗
-          </a>
-          <a
-            href={`https://t.me/${import.meta.env.VITE_TELEGRAM_BOT_USERNAME || 'bot'}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: '#38bdf8', textDecoration: 'none' }}
-          >
-            @{import.meta.env.VITE_TELEGRAM_BOT_USERNAME || 'Telegram Bot'} ↗
-          </a>
+
+        {/* Bottom meta row */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '12px',
+            fontSize: '0.82rem',
+            color: 'var(--text-dim)',
+            paddingTop: '12px',
+            borderTop: '1px solid rgba(255, 255, 255, 0.04)',
+          }}
+        >
+          <div>
+            <span>BOT Wallet Watcher • Verified on-chain at </span>
+            <a
+              href="https://scan.botchain.ai/address/0x78d6f5a35149798c7985090ebc01c58cae01429f"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: 'var(--cyan-primary)', textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
+            >
+              0x78d6...429f
+            </a>
+          </div>
+          <div style={{ display: 'flex', gap: '16px' }}>
+            <button
+              onClick={() => setIsWhitepaperOpen(true)}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--cyan-primary)',
+                cursor: 'pointer',
+                fontSize: 'inherit',
+                padding: 0,
+              }}
+            >
+              Whitepaper ↗
+            </button>
+            <a
+              href={`https://t.me/${import.meta.env.VITE_TELEGRAM_BOT_USERNAME || 'bot'}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#38bdf8', textDecoration: 'none' }}
+            >
+              Telegram Bot ↗
+            </a>
+          </div>
         </div>
       </footer>
     </div>

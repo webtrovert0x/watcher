@@ -57,7 +57,7 @@ export const AddWalletModal: React.FC<AddWalletModalProps> = ({ isOpen, onClose,
       if (recordOnChain && isConnected) {
         try {
           const minWei = parseEther(thresholdBOT || '0');
-          await writeContractAsync({
+          await (writeContractAsync as any)({
             address: BOT_WALLET_WATCHER_ADDRESS,
             abi: BOT_WALLET_WATCHER_ABI,
             functionName: 'watchWallet',

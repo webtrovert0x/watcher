@@ -38,3 +38,9 @@ export const appKit = createAppKit({
 });
 
 export const config = wagmiAdapter.wagmiConfig;
+
+declare module 'wagmi' {
+  interface Register {
+    config: typeof config;
+  }
+}
